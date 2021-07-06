@@ -106,3 +106,26 @@ y = Addition(10)
 add = x + y
 print(add)
 
+# 11. The __call__ method enables Python programmers to write classes where the instances behave like functions
+# and can be called like a function.
+# Create a new class with __call__ method and define this call to return sum.
+
+
+class Sum:
+    def __call__(self, a, b):
+        return a + b
+
+
+sum = Sum()
+print(sum(5, 4))
+
+#12*. Making Your Objects Truthy or Falsey Using __bool__().
+#Create class MyOrder with cart and customer instance attributes.
+#Override the __bool__magic method considered to be truthy if the length of the cart list is non-zero.
+#e.g.:
+#order_1 = MyOrder(['a', 'b', 'c'], 'd')
+#order_2 = MyOrder([], 'a')
+#bool(order_1)
+#True
+#bool(order_2)
+#False
