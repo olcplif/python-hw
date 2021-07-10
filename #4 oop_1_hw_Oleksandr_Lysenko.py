@@ -80,22 +80,29 @@ for animal in animals:
 # The population of the city {name} is {population}
 
 class City:
+    def __call__(self):
+        if self.population > 1500:
+            return f'The population of the city {self.name} is {self.population}'
+        else:
+            return f'Your city {self.name} is too small'
+
     def __init__(self, name, population):
         self.name = name
         self.population = population
 
-    def check_population(self):
-        if self.population > 1500:
-            return f'The population of the city {self.name} is {self.population}'
-        else:
-            return 'Your city is too small'
+    # def check_population(self):
+    #     if self.population > 1500:
+    #         return f'The population of the city {self.name} is {self.population}'
+    #     else:
+    #         return 'Your city is too small'
 
 
-ivano_frankivsk = City("Ivano-Frankivsk", 25000)
+ivano_frankivsk = City("Ivano-Frankivsk", 250000)
 mykytynci = City("Mykytynci", 1000)
-print(ivano_frankivsk.check_population())
+# print(ivano_frankivsk.check_population())
+print(ivano_frankivsk())
 # OUTPUT: The population of the city Ivano-Frankivsk is 25000
-print(mykytynci.check_population())
+print(mykytynci())
 
 
 # OUTPUT: Your city is too small
