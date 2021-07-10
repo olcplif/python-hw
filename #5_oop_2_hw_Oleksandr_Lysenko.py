@@ -1,4 +1,4 @@
-# #1. Make the class with composition.
+# 1. Make the class with composition.
 class Laptop:
     def __init__(self):
         battery1 = Battery(10000)
@@ -20,7 +20,7 @@ print(laptop.batteries)
 # OUTPUT: [<__main__.Battery object at 0x7f4aad175a30>, <__main__.Battery object at 0x7f4aad175be0>]
 
 
-# #2. Make the class with aggregation
+# 2. Make the class with aggregation
 class Guitar:
     def __init__(self, string):
         self.string = string
@@ -41,7 +41,7 @@ print(guitar)  # If I destroy this Guitar instance, the Guitar instance still ex
 # OUTPUT: <__main__.Guitar object at 0x7f17531ab190>
 
 
-# #3. Make class with one method "add_nums" with 3 parameters, which returns sum of these parameters.
+# 3. Make class with one method "add_nums" with 3 parameters, which returns sum of these parameters.
 #     Note: this method should be static
 
 
@@ -55,3 +55,24 @@ class Calc:
 
 
 print(Calc.add_nums(3, 4, 3))
+
+
+# 3. Make class which takes 1 parameter on init - list of ingredients and defines instance attribute ingredients.
+
+class Pasta:
+    def __init__(self, ingredients):
+        self.ingredients = ingredients
+
+    # carbonara(['forcemeat', 'tomatoes']) and bolognaise(['bacon', 'parmesan', 'eggs'])
+    @classmethod
+    def carbonara(cls, ingredients):
+        carbonara_pasta = ['forcemeat', 'tomatoes'].append(ingredients)
+        return cls(carbonara_pasta)
+
+    @classmethod
+    def bolognaise(cls, ingredients):
+        pass
+
+
+pasta = Pasta.carbonara(['forcemeat', 'tomatoes'])
+print(pasta)

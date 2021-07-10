@@ -40,7 +40,8 @@ class School:
 # bus_school_color
 class SchoolBus(School, Bus):
     def __init__(self, color, get_school_id, number_of_students, capacity, max_speed, mileage):
-        super().__init__(get_school_id, number_of_students, capacity, max_speed, mileage)
+        super(School).__init__(get_school_id, number_of_students)
+        super(Bus). __init__(capacity, max_speed, mileage)
         self.color = color
 
     def bus_school_color(self):
@@ -158,8 +159,7 @@ class MyOrder:
     def __bool__(self):
         if len(self.cart) != 0:
             return True
-        else:
-            return False
+        return False
 
 
 order_1 = MyOrder(['a', 'b', 'c'], 'd')
