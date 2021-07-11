@@ -153,6 +153,8 @@ class AddressBook:
 
 address_book3 = AddressBook(1, 'Robert Branson', '911-911-911', 'NY city', 'robert@mail.com', '01/01/1900', 21)
 print(address_book3.__str__())
+# OUTPUT: AddressBook(key=1, name=Robert Branson, phone_number=911-911-911, address=NY city, email=robert@mail.com,
+# birthday=01/01/1900, age=21)
 
 
 
