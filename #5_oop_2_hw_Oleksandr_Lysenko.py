@@ -18,8 +18,6 @@ hp = Laptop()
 print(hp)
 # OUTPUT: <__main__.Laptop object at 0x7f4aad1b4070>
 print(hp.battery)
-
-
 # OUTPUT: [<__main__.Battery object at 0x7f1612fe57f0>]
 
 
@@ -39,8 +37,6 @@ guitar = Guitar(string)
 print(string)
 # OUTPUT: <__main__.GuitarString object at 0x7f17531ab160>
 print(guitar)  # If I destroy this Guitar instance, the Guitar instance still exists.
-
-
 # OUTPUT: <__main__.Guitar object at 0x7f17531ab190>
 
 
@@ -54,8 +50,6 @@ class Calc:
 
 
 print(Calc.add_nums(3, 4, 3))
-
-
 # OUTPUT: 10
 
 
@@ -77,8 +71,6 @@ class Pasta:
 print(Pasta.carbonara())
 # OUTPUT: <__main__.Pasta object at 0x7ffa617e94c0>
 print(Pasta.bolognaise())
-
-
 # OUTPUT: <__main__.Pasta object at 0x7ffa617e94c0>
 
 
@@ -104,8 +96,6 @@ Concert.max_visitors_num = 100
 concert = Concert()
 concert.visitors_count = 99
 print(concert.visitors_count)
-
-
 # OUTPUT: 99
 
 
@@ -139,8 +129,6 @@ print(address_book2)
 # OUTPUT: AddressBookNamedTuple(key=1, name='Robert', phone_number='911-911-911', address='NY city',
 # email='robert@mail.com', birthday='01/01/1900', age=21)
 print(address_book2.email)
-
-
 # OUTPUT: robert@mail.com
 
 
@@ -165,8 +153,6 @@ class AddressBook:
 
 address_book3 = AddressBook(1, 'Robert Branson', '911-911-911', 'NY city', 'robert@mail.com', '01/01/1900', 21)
 print(address_book3.__str__())
-
-
 # OUTPUT: AddressBook(key=1, name=Robert Branson, phone_number=911-911-911, address=NY city, email=robert@mail.com,
 # birthday=01/01/1900, age=21)
 
@@ -194,8 +180,6 @@ print(human1.set_age)
 # OUTPUT: age = 50
 human1.set_age = 55
 print(human1.set_age)
-
-
 # OUTPUT: age = 55
 
 
@@ -215,8 +199,6 @@ print(getattr(student1, 'email'))
 student_email = 'student1.new@mail.com'
 student1.email = student_email
 print(getattr(student1, 'email'))
-
-
 # OUTPUT: student1.new@mail.com
 
 
