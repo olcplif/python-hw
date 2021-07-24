@@ -1,13 +1,8 @@
 from __future__ import annotations
-
-from datetime import time
-
-from typing import Dict, Any, Union
-
+import time
+from typing import Dict, Any
 import random
-
 from abc import ABC, abstractmethod
-
 import uuid
 
 
@@ -31,17 +26,20 @@ class Herbivorous(Animal):
         # restores its strength by 50%
         self.revival(50)
 
-    def revival(self, num):
-        per_cent = num / 100
-        if (self.current_strength + self.current_strength * per_cent) <= self.max_strength:
-            self.current_strength = self.current_strength * per_cent + self.current_strength
+    def revival(self, per_cent):
+        strength = int(self.current_strength + (self.current_strength / 100 * per_cent))
+        if strength < self.max_strength:
+            self.current_strength = strength
         else:
             self.current_strength = self.max_strength
         print(f'{self.name} recovered strength to {self.current_strength}')
 
-    def revers_revival(self, num):
-        per_cent = num / 100
-        self.current_strength = self.current_strength - self.current_strength * per_cent
+    def revers_revival(self, per_cent):
+        strength = int(self.current_strength - (self.current_strength / 100 * per_cent))
+        if strength > 0:
+            self.current_strength = strength
+        else:
+            forest.remove_animal(self)
         print(f'{self.name} lost strength to {self.current_strength}')
 
 
@@ -54,10 +52,9 @@ class Predator(Animal):
             print(f'{self.name} is unlucky - today it will be left without dinner!')
         else:
             print(f'The {self.name} saw and chased the {forest.animals[victim_id].name}!')
-            print('...')
             if self.speed >= forest.animals[victim_id].speed:
                 print(f'{self.name} caught up the {forest.animals[victim_id].name}!')
-                if self.current_strength > forest.animals[victim_id].current_streangth:
+                if self.current_strength > forest.animals[victim_id].current_strength:
                     print(f'{self.name} killed his victim {forest.animals[victim_id].name}!')
                     forest.remove_animal(forest.animals[victim_id])
                     self.revival(50)
@@ -67,15 +64,16 @@ class Predator(Animal):
                     print(f'The predator {self.name} could not kill its victim... '
                           f'Its current strength = {self.current_strength}')
                     forest.animals[victim_id].revers_revival(30)
-                    print(f'Current strength of victim {forest.animals[victim_id].name} = '
-                          f'{forest.animals[victim_id].current_strength}')
+                    # if forest.animals[victim_id].current_strength > 0:
+                    #     # print(f'Current strength of victim {forest.animals[victim_id].name} = '
+                    #     #       f'{forest.animals[victim_id].current_strength}')
             else:
                 self.revers_revival(30)
                 print(f'The predator {self.name} did not catch up the {forest.animals[victim_id].name}... '
                       f'Its current strength = {self.current_strength}')
                 forest.animals[victim_id].revers_revival(30)
-                print(f'Current strength of lucky victim {forest.animals[victim_id].name} = '
-                      f'{forest.animals[victim_id].current_strength}')
+                # print(f'Current strength of lucky victim {forest.animals[victim_id].name} = '
+                #       f'{forest.animals[victim_id].current_strength}')
 
         if victim_id in forest.animals.keys():
             if forest.animals[victim_id].current_strength <= 0:
@@ -86,17 +84,20 @@ class Predator(Animal):
             print(f'The {self.name} died...')
             forest.remove_animal(self)
 
-    def revival(self, num):
-        per_cent = num / 100
-        if (self.current_strength + (self.current_strength * per_cent)) <= self.max_strength:
-            self.current_strength = self.current_strength * per_cent + self.current_strength
+    def revival(self, per_cent):
+        strength = int(self.current_strength + (self.current_strength / 100 * per_cent))
+        if strength < self.max_strength:
+            self.current_strength = strength
         else:
             self.current_strength = self.max_strength
-            print(f'{self.name} recovered strength to {self.current_strength}')
+        print(f'{self.name} recovered strength to {self.current_strength}')
 
-    def revers_revival(self, num):
-        per_cent = num / 100
-        self.current_strength = self.current_strength - self.current_strength * per_cent
+    def revers_revival(self, per_cent):
+        strength = int(self.current_strength - (self.current_strength / 100 * per_cent))
+        if strength > 0:
+            self.current_strength = strength
+        else:
+            forest.remove_animal(self)
         print(f'{self.name} lost strength to {self.current_strength}')
 
 
@@ -121,35 +122,60 @@ class Forest:
                 flag = True
         return flag
 
+    def one_predator_remained(self):
+        flag = False
+        if len(self.animals) == 1:
+            for key in self.animals:
+                if isinstance(self.animals[key], Predator):
+                    flag = True
+        return flag
+
 
 def animal_generator():
     # animal_generator to create a random animal
-    names_predator = ['lion', 'wolf', 'fox']
-    names_herbivorous = ['deer', 'antelope', 'rabbit']
+    names_predator = ['Lion', 'Wolf', 'Fox', 'Bear', 'Tiger']
+    names_herbivorous = ['Deer', 'Antelope', 'Rabbit', 'Dipus', 'Mouse']
     # types_animal = ['Herbivorous', 'Predator']
     nature = []
-    type_animal = random.choice(['Herbivorous', 'Predator'])
-    if type_animal == 'Herbivorous':
-        nature.append(Herbivorous(random.randrange(25, 100, 1), random.randrange(25, 100, 1),
-                                  name=random.choice(names_herbivorous)))
-    else:
-        nature.append(Predator(random.randrange(25, 100, 1), random.randrange(25, 100, 1),
-                               name=random.choice(names_predator)))
-    yield nature
+    for i in range(1,11):
+        type_animal = random.choice(['Herbivorous', 'Predator'])
+        if type_animal == 'Herbivorous':
+            nature.append(Herbivorous(random.randrange(25, 100, 1), random.randrange(25, 100, 1),
+                                      name=random.choice(names_herbivorous)+str(i)))
+        else:
+            nature.append(Predator(random.randrange(25, 100, 1), random.randrange(25, 100, 1),
+                                   name=random.choice(names_predator)+str(i)))
+    return nature
 
 
 if __name__ == "__main__":
     nature = animal_generator()
-    # nature_iterator = iter(nature)
+    nature_iterator = iter(nature)
     forest = Forest()
 
+
     for i in range(5):
-        animal = next(nature)
+        animal = next(nature_iterator)
         forest.add_animal(animal)
 
+    print('In the forest live: ')
+    for animal in forest.animals.values():
+        print(f'{animal.name}: strength {animal.current_strength}')
+
+    event = 1
     while True:
+        print(f'{event} EVENT')
         if not forest.any_predator_left():
+            print('GAME OVER - only one predator remained in the forest [1]')
             break
-        for animal in forest.animals.values():
-            animal.eat(forest=forest)
+
+        if forest.one_predator_remained():
+            print('GAME OVER - only one predator remained in the forest [2]')
+            break
+
+        # for animal in forest.animals.copy().values():
+        #     animal.eat(forest=forest)
+
+        random.choice(list(forest.animals.values())).eat(forest)
+        event += 1
         time.sleep(1)
