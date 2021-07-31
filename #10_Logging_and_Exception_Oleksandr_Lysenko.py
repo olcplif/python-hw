@@ -1,60 +1,193 @@
-calc_commands = ['+', '-', '*', '/', '**', 'pow', '%']
+import logging
+
+template_log = "%(asctime)s - %(levelname)s: %(message)s"
+file_log = "calc_log.log"
+
+logging.basicConfig(filename=file_log, filemode='a', level=logging.INFO, format=template_log)
+
+
+class OpenLogFile:
+    def __init__(self, path, access_attr='a'):
+        self.file = open(path, access_attr)
+
+    def __enter__(self):
+        return self.file
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            logging.info('Log-file closed!')
+            self.file.close()
+        elif exc_type is Exception:
+            logging.error(exc_type, exc_val, exc_tb)
+            return True
+
+
+with open('calc_log.log', 'a') as file:
+    logging.info(f'Log file <{file}> opened.')
+
+
+class Calc:
+    calc_commands = ['+', '-', '*', '/', '**', 'root', '%']
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def solution(_operand_1, _operand_2, comm):
+        if Command.get_command(comm) == '+':
+            result = Operand.plus(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
+            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                  f'{Operand.get_operand(_operand_2)} = {result}')
+        elif Command.get_command(comm) == '-':
+            result = Operand.minus(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
+            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                  f'{Operand.get_operand(_operand_2)} = {result}')
+        elif Command.get_command(comm) == '*':
+            result = Operand.multiply(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
+            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                  f'{Operand.get_operand(_operand_2)} = {result}')
+        elif Command.get_command(comm) == '/':
+            result = Operand.division(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
+            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                  f'{Operand.get_operand(_operand_2)} = {result}')
+        elif Command.get_command(comm) == '**':
+            result = Operand.power(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
+            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                  f'{Operand.get_operand(_operand_2)} = {result}')
+        elif Command.get_command(comm) == 'root':
+            result = Operand.root(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
+            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                  f'{Operand.get_operand(_operand_2)} = {result}')
+        elif Command.get_command(comm) == '%':
+            result = Operand.percent(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
+            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                  f'{Operand.get_operand(_operand_2)} = {result}')
+        logging.info(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                     f'{Operand.get_operand(_operand_2)} = {result}')
+
+
+class Operand(Calc):
+    def __init__(self, number_of_operand):
+        self.number_of_operand = number_of_operand
+        super().__init__()
+
+    @staticmethod
+    def is_integer(num):
+        try:
+            float(num)
+        except ValueError:
+            return False
+        else:
+            return float(num).is_integer()
+
+    def check_operand(self):
+        while True:
+            try:
+                var = input(f'Enter {self.number_of_operand}: ')
+
+                if var == 'stop':
+                    logging.info('*** Program exit ***')
+                    raise SystemExit
+
+                if float(var) or float(var) == 0.0:
+
+                    if float(var) == 0.0:
+                        logging.info(f"---> Dirty hack is present in the definition of {self.number_of_operand}! "
+                                     f"Because float('0') != True")
+
+                    if self.is_integer(var):
+
+                        try:
+                            operand = int(var)
+                            logging.info(f'{self.number_of_operand} = {var} is type integer')
+                        except ValueError:
+                            operand = float(var)
+                            logging.info(f'{self.number_of_operand} = {var} is type float')
+
+                    else:
+                        operand = float(var)
+                        logging.info(f'{self.number_of_operand} = {var} is type float')
+
+                    return operand
+
+            except (ValueError, TypeError):
+                print('---> Enter the correct type: int or float!')
+                logging.error(f"---> {self.number_of_operand} = <{var}> isn't correct  number")
+
+    def get_operand(self):
+        return self
+
+    @staticmethod
+    def plus(a, b):
+        return a + b
+
+    @staticmethod
+    def minus(a, b):
+        return a - b
+
+    @staticmethod
+    def multiply(a, b):
+        return a * b
+
+    @staticmethod
+    def division(a, b):
+        try:
+            result = a / b
+        except ZeroDivisionError:
+            logging.warning('---> Warning! Division by zero!')
+            result = 0
+        return result
+
+    @staticmethod
+    def power(a, b):
+        return a ** b
+
+    @staticmethod
+    def root(a, b):
+        try:
+            result = pow(a, (1 / b))
+        except ZeroDivisionError:
+            logging.warning('---> Warning! Division by zero:')
+            result = 0
+        return result
+
+    @staticmethod
+    def percent(a, b):
+        return a / 100 * b
+
+
+class Command(Calc):
+    def __init__(self):
+        super().__init__()
+
+    @staticmethod
+    def check_command():
+        while True:
+            try:
+                comm = input('Enter command: ')
+                if comm == 'stop':
+                    logging.info('*** Program exit ***')
+                    raise SystemExit
+                if comm in Calc.calc_commands:
+                    logging.info(f'selected command -> "{comm}"')
+                    return comm
+                else:
+                    raise ValueError
+            except ValueError:
+                print(f'---> Enter the correct command! {Calc.calc_commands}')
+                logging.error(f"---> <'{comm}'> isn't correct command!")
+
+    def get_command(self):
+        return self
+
+
+print('*' * 30)
+print("Enter 'stop' for exit!")
+print('*' * 30)
 
 while True:
-    flag = True
-    while flag:
-        try:
-            operand_1 = int(input('Enter operand1:'))
-        except ValueError:
-            print('--- Enter the correct number!')
-            flag = True
-        except TypeError:
-            print('--- Use the correct type for number!')
-            flag = True
-        else:
-            flag = False
-
-    flag = True
-    while flag:
-        command = input('Enter command:')
-        if command in calc_commands:
-            flag = False
-        else:
-            print('--- Enter the correct command!')
-            flag = True
-
-    flag = True
-    while flag:
-        try:
-            operand_2 = int(input('Enter operand2:'))
-        except ValueError:
-            print('--- Enter the correct number!')
-            flag = True
-        else:
-            flag = False
-
-    if command == '+':
-        solution = operand_1 + operand_2
-        print(f'{operand_1} {command} {operand_2} = {solution}')
-    elif command == '-':
-        solution = operand_1 - operand_2
-        print(f'{operand_1} {command} {operand_2} = {solution}')
-    elif command == '*':
-        solution = operand_1 - operand_2
-        print(f'{operand_1} {command} {operand_2} = {solution}')
-    elif command == '/':
-        try:
-            solution = operand_1 / operand_2
-        except ZeroDivisionError:
-            print('--- Warning! Division by zero:')
-            solution = 0
-        print(f'{operand_1} {command} {operand_2} = {solution}')
-    elif command == '**':
-        solution = operand_1 ** operand_2
-        print(f'{operand_1} {command} {operand_2} = {solution}')
-    elif command == 'pow':
-        solution = pow(operand_1, (1 / operand_2))
-        print(f'{operand_1} {command} {operand_2} = {solution}')
-    elif command == '%':
-        solution = operand_1 / 100 * operand_2
-        print(f'{operand_2} percent of the number {operand_1} = {solution}')
+    operand_1 = Operand('operand1').check_operand()
+    command = Command().check_command()
+    operand_2 = Operand('operand2').check_operand()
+    Calc().solution(operand_1, operand_2, command)
+    print('*' * 30)
