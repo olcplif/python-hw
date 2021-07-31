@@ -36,3 +36,8 @@
 2021-07-31 23:06:32,975 - WARNING: ---> Warning! Division by zero:
 2021-07-31 23:06:32,976 - INFO: 49 root 0.0 = 0
 2021-07-31 23:06:37,879 - INFO: *** Program exit ***
+2021-07-31 23:16:51,633 - INFO: Log file <<_io.TextIOWrapper name='calc_log.log' mode='a' encoding='UTF-8'>> opened.
+2021-07-31 23:18:24,601 - INFO: Log file <<_io.TextIOWrapper name='calc_log.log' mode='a' encoding='UTF-8'>> opened.
+2021-07-31 23:18:29,768 - ERROR: ---> operand1 = <rr> isn't correct  number
+2021-07-31 23:18:31,963 - INFO: operand1 = 44 is type integer
+2021-07-31 23:18:39,895 - INFO: *** Program exit ***

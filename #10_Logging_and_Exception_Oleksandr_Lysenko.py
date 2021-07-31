@@ -54,6 +54,12 @@ class Calc:
         return print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
                      f'{Operand.get_operand(_operand_2)} = {result}')
 
+    @staticmethod
+    def check_stop(str_):
+        if str_.lower() == 'stop':
+            logging.info('*** Program exit ***')
+            raise SystemExit
+
 
 class Operand(Calc):
     def __init__(self, number_of_operand):
@@ -73,9 +79,7 @@ class Operand(Calc):
         while True:
             try:
                 var = input(f'Enter {self.number_of_operand}: ')
-                if var == 'stop':
-                    logging.info('*** Program exit ***')
-                    raise SystemExit
+                Calc.check_stop(var)
                 if float(var) or float(var) == 0.0:
                     if float(var) == 0.0:
                         logging.info(f"---> Dirty hack is present in the definition of {self.number_of_operand}! "
@@ -140,9 +144,7 @@ class Command(Calc):
         while True:
             try:
                 comm = input('Enter command: ')
-                if comm == 'stop':
-                    logging.info('*** Program exit ***')
-                    raise SystemExit
+                Calc.check_stop(comm)
                 if comm in Calc.calc_commands:
                     logging.info(f'selected command -> "{comm}"')
                     return comm
