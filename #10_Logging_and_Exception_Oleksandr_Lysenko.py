@@ -18,7 +18,7 @@ class OpenLogFile:
             logging.info('Log-file closed!')
             self.file.close()
         elif exc_type is Exception:
-            logging.error(exc_type, exc_val, exc_tb)
+            print(exc_type, exc_val, exc_tb)
             return True
 
 
@@ -35,34 +35,23 @@ class Calc:
     @staticmethod
     def solution(_operand_1, _operand_2, comm):
         if Command.get_command(comm) == '+':
-            result = Operand.plus(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
-            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
-                  f'{Operand.get_operand(_operand_2)} = {result}')
+            result = Operand.__add__(_operand_1, _operand_2)
         elif Command.get_command(comm) == '-':
-            result = Operand.minus(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
-            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
-                  f'{Operand.get_operand(_operand_2)} = {result}')
+            result = Operand.__sub__(_operand_1, _operand_2)
         elif Command.get_command(comm) == '*':
-            result = Operand.multiply(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
-            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
-                  f'{Operand.get_operand(_operand_2)} = {result}')
+            result = Operand.__mul__(_operand_1, _operand_2)
         elif Command.get_command(comm) == '/':
-            result = Operand.division(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
-            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
-                  f'{Operand.get_operand(_operand_2)} = {result}')
+            result = Operand.__truediv__(_operand_1, _operand_2)
         elif Command.get_command(comm) == '**':
-            result = Operand.power(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
-            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
-                  f'{Operand.get_operand(_operand_2)} = {result}')
+            result = Operand.__pow__(_operand_1, _operand_2)
         elif Command.get_command(comm) == 'root':
-            result = Operand.root(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
-            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
-                  f'{Operand.get_operand(_operand_2)} = {result}')
+            result = Operand.root(_operand_1, _operand_2)
         elif Command.get_command(comm) == '%':
-            result = Operand.percent(Operand.get_operand(_operand_1), Operand.get_operand(_operand_2))
-            print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
-                  f'{Operand.get_operand(_operand_2)} = {result}')
+            result = Operand.percent(_operand_1, _operand_2)
+
         logging.info(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
+                     f'{Operand.get_operand(_operand_2)} = {result}')
+        return print(f'{Operand.get_operand(_operand_1)} {Command.get_command(comm)} '
                      f'{Operand.get_operand(_operand_2)} = {result}')
 
 
@@ -84,32 +73,23 @@ class Operand(Calc):
         while True:
             try:
                 var = input(f'Enter {self.number_of_operand}: ')
-
                 if var == 'stop':
                     logging.info('*** Program exit ***')
                     raise SystemExit
-
                 if float(var) or float(var) == 0.0:
-
                     if float(var) == 0.0:
                         logging.info(f"---> Dirty hack is present in the definition of {self.number_of_operand}! "
                                      f"Because float('0') != True")
-
                     if self.is_integer(var):
-
                         try:
                             operand = int(var)
                             logging.info(f'{self.number_of_operand} = {var} is type integer')
                         except ValueError:
                             operand = float(var)
-                            logging.info(f'{self.number_of_operand} = {var} is type float')
-
                     else:
                         operand = float(var)
                         logging.info(f'{self.number_of_operand} = {var} is type float')
-
                     return operand
-
             except (ValueError, TypeError):
                 print('---> Enter the correct type: int or float!')
                 logging.error(f"---> {self.number_of_operand} = <{var}> isn't correct  number")
@@ -117,43 +97,38 @@ class Operand(Calc):
     def get_operand(self):
         return self
 
-    @staticmethod
-    def plus(a, b):
-        return a + b
+    def __add__(self, other):
+        return self + other
 
-    @staticmethod
-    def minus(a, b):
-        return a - b
+    def __sub__(self, other):
+        return self - other
 
-    @staticmethod
-    def multiply(a, b):
-        return a * b
+    def __mul__(self, other):
+        return self * other
 
-    @staticmethod
-    def division(a, b):
+    def __truediv__(self, other):
         try:
-            result = a / b
+            result = self / other
         except ZeroDivisionError:
             logging.warning('---> Warning! Division by zero!')
             result = 0
         return result
 
-    @staticmethod
-    def power(a, b):
-        return a ** b
+    def __pow__(self, other):
+        return self ** other
 
     @staticmethod
-    def root(a, b):
+    def root(self, other):
         try:
-            result = pow(a, (1 / b))
+            result = pow(self, (1 / other))
         except ZeroDivisionError:
             logging.warning('---> Warning! Division by zero:')
             result = 0
         return result
 
     @staticmethod
-    def percent(a, b):
-        return a / 100 * b
+    def percent(self, other):
+        return self / 100 * other
 
 
 class Command(Calc):
