@@ -58,6 +58,7 @@ class Calc:
     def check_stop(str_):
         if str_.lower() == 'stop':
             logging.info('*** Program exit ***')
+            print('*** Program exit ***')
             raise SystemExit
 
 

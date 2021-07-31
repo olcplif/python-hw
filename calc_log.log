@@ -41,3 +41,16 @@
 2021-07-31 23:18:29,768 - ERROR: ---> operand1 = <rr> isn't correct  number
 2021-07-31 23:18:31,963 - INFO: operand1 = 44 is type integer
 2021-07-31 23:18:39,895 - INFO: *** Program exit ***
+2021-07-31 23:23:20,455 - INFO: Log file <<_io.TextIOWrapper name='calc_log.log' mode='a' encoding='UTF-8'>> opened.
+2021-07-31 23:23:25,822 - INFO: operand1 = 4 is type integer
+2021-07-31 23:23:26,998 - INFO: selected command -> "-"
+2021-07-31 23:23:28,428 - INFO: operand2 = 333 is type integer
+2021-07-31 23:23:28,428 - INFO: 4 - 333 = -329
+2021-07-31 23:23:31,265 - INFO: *** Program exit ***
+2021-07-31 23:23:52,990 - INFO: Log file <<_io.TextIOWrapper name='calc_log.log' mode='a' encoding='UTF-8'>> opened.
+2021-07-31 23:23:55,952 - INFO: operand1 = 55 is type integer
+2021-07-31 23:23:58,652 - ERROR: ---> <'-333'> isn't correct command!
+2021-07-31 23:24:03,031 - INFO: selected command -> "-"
+2021-07-31 23:24:05,264 - INFO: operand2 = 23423 is type integer
+2021-07-31 23:24:05,265 - INFO: 55 - 23423 = -23368
+2021-07-31 23:24:14,073 - INFO: *** Program exit ***
