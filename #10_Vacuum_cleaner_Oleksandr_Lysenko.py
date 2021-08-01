@@ -91,7 +91,7 @@ class RobotCleaner:
 
     def check_filling_garbage(self):
         if self.filling_garbage >= self.class_max_filling_garbage:
-            raise FullGarbageBag(self.filling_garbage)
+            raise FullGarbageBag()
 
 
 class RobotException(Exception):
@@ -123,9 +123,6 @@ class LowWater(RobotException):
 
 
 class FullGarbageBag(RobotException):
-    def __init__(self, garbage_level):
-        self.garbage_level = garbage_level
-
     def __str__(self):
         return f'+++ The current garbage level is FULL! Needs cleaning!!! +++'
 
