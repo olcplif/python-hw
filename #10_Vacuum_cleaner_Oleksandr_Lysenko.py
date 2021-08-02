@@ -62,7 +62,10 @@ class RobotCleaner:
             self.filling_garbage += randint(0, 10)
             if self.filling_garbage >= self.class_max_filling_garbage:
                 self.filling_garbage = self.class_max_filling_garbage
-            print(f'The garbage bag is {self.filling_garbage} percent full.')
+                print(f'The garbage bag is full.')
+            else:
+                print(f'The garbage bag is {int(self.class_max_filling_garbage / 100 * self.filling_garbage)}'
+                      f' percent full.')
             if not self.check_filling_garbage():
                 self.battery_charge -= 10
                 print("Finished vacuum cleaning.")
