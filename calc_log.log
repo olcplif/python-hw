@@ -54,3 +54,4 @@
 2021-07-31 23:24:05,264 - INFO: operand2 = 23423 is type integer
 2021-07-31 23:24:05,265 - INFO: 55 - 23423 = -23368
 2021-07-31 23:24:14,073 - INFO: *** Program exit ***
+2021-08-01 00:04:41,823 - INFO: Log file <<_io.TextIOWrapper name='calc_log.log' mode='a' encoding='UTF-8'>> opened.
