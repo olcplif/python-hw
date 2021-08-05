@@ -40,3 +40,7 @@ def sum_list(list_):
 
 
 sum_list([1, '6', 2.0, 't', '4r', '4.5'])
+
+# [1, '6', 2.0, 't', '4r', '4.5']
+# [1, 6, 2.0, 4.5]
+# The sum of the items in the filtered list =  13.5
