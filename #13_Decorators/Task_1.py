@@ -26,3 +26,6 @@ def create_list():
 
 
 print(create_list())
+
+# >> This function was performed for 13.847415685653687 seconds. <<
+# ['3', '4', '5', 'fg', 'hh', 'e']
