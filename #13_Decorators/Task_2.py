@@ -20,3 +20,5 @@ def get_hypotenuse(leg_1, leg_2):
 
 
 get_hypotenuse(3, 4)
+
+# At legs 3 and 4 the hypotenuse is equal to 5.0
