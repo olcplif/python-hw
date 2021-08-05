@@ -4,10 +4,7 @@
 
 def convert_to_str(func):
     def wrap(n):
-        str_list = []
-        for el in func(n):
-            el = str(el)
-            str_list.append(el)
+        str_list = [str(el) for el in func(n)]
         return str_list
 
     return wrap
@@ -15,9 +12,7 @@ def convert_to_str(func):
 
 @convert_to_str
 def create_list(n):
-    list_ = []
-    for el in range(n + 1):
-        list_.append(el)
+    list_ = [el for el in range(n + 1)]
     return list_
 
 
