@@ -3,17 +3,15 @@
 
 
 def convert_to_str(func):
-    def wrap(n):
-        str_list = [str(el) for el in func(n)]
-        return str_list
+    def wrap(*args, **kwargs):
+        return [str(el) for el in func(*args, **kwargs)]
 
     return wrap
 
 
 @convert_to_str
 def create_list(n):
-    list_ = [el for el in range(n + 1)]
-    return list_
+    return [el for el in range(n + 1)]
 
 
 print(create_list(7))
