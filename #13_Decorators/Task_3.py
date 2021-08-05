@@ -3,57 +3,6 @@
 # яку можна перевести в число, (наприклад “1”) то строка приводиться до чисельного типу даних
 
 
-# def check_data(func):
-#     def wrap(list_):
-#         def convert_to_int(el_):
-#             if isinstance(el_, str) and el_.isdigit():
-#                 return True
-#         filter_list = []
-#         for el in list_:
-#             check_int = isinstance(el, int)
-#             check_float = isinstance(el, float)
-#             # convert_to_int = str(el).isdigit()
-#             if check_int or check_float or convert_to_int(el):
-#
-#                 filter_list.append(el)
-#         result = func(filter_list)
-#         print(f">> {result} <<")
-#         return result
-#
-#     return wrap
-
-# def check_data(func):
-#     def wrap(list_):
-#         def filter_num(el_):
-#             try:
-#                 if isinstance(el_, int) or isinstance(el, float):
-#                     return True
-#                 else:
-#                     raise ValueError
-#             except ValueError:
-#                 pass
-#
-#         def convert_num(el_):
-#             try:
-#                 if isinstance(el_, str) and el_.isdigit():
-#                     new_el_ = int(el_)
-#                     return True, new_el_
-#                 else:
-#                     raise ValueError
-#             except ValueError:
-#                 pass
-#
-#         filter_list = []
-#         for el in list_:
-#             if filter_num(el):
-#                 filter_list.append(el)
-#         result = func(filter_list)
-#         print(f">> {result} <<")
-#         return result
-#
-#     return wrap
-
-
 def check_data(func):
     def wrap(list_):
         def check_convert_to_float(el_):
