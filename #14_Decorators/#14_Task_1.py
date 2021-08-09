@@ -27,15 +27,13 @@ def check_argument_types(*args_decor):
                 if len(args_decor) != len(args_func) + 1:
                     raise WrongNumArgs
                 else:
-                    flag = True
                     for i in range(len(args_func)):
                         if type(args_func[i]) != args_decor[i]:
-                            # flag = False
                             raise WrongType
-                    if type(func(*args_func)) == args_decor[-1] and flag:
-                        return func(*args_func)
-                    else:
+                    if type(func(*args_func)) != args_decor[-1]:
                         raise WrongTypeResult
+                    else:
+                        return func(*args_func)
 
             except WrongTypeResult:
                 return "Argument-result type do not match the decorator"
@@ -54,5 +52,4 @@ def func_sum(a, b, c):
     return sum([a, b, c])
 
 
-some = func_sum(1, 1.1, 1)
-print(some)
+print(func_sum(1, 1.1, 1))
