@@ -29,13 +29,14 @@ class MakeDivTag:
 
     def __call__(self, func):
         def wrap(*args):
-            result = f"<div class = {self.style_class}>" + "\n" + func(*args) + "<div>"
+            opening_tag, closing_tag = f"<div class={self.style_class}>", "</div>"
+            result = f"{opening_tag}\n{func(*args)}{closing_tag}"
             return result
 
         return wrap
 
 
-@MakeDivTag('*style_class*')
+@MakeDivTag('users_block')
 def get_names_page(names_list):
     template_head = "<h3> User names: </h3>"
     template = ""
@@ -44,4 +45,5 @@ def get_names_page(names_list):
     return template_head + "\n" + template
 
 
-print(get_names_page(["Misha", "Olya", "Vitaliy", "Vita"]))
+block_user_name = get_names_page(["Misha", "Olya", "Vitaliy", "Vita"])
+print(block_user_name)
