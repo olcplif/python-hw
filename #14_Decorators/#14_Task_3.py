@@ -23,7 +23,7 @@
 # <p> Vita </p>
 # </div>
 
-class MakeDiv:
+class MakeDivTag:
     def __init__(self, style_class):
         self.style_class = style_class
 
@@ -35,7 +35,7 @@ class MakeDiv:
         return wrap
 
 
-@MakeDiv('*style_class*')
+@MakeDivTag('*style_class*')
 def get_names_page(names_list):
     template_head = "<h3> User names: </h3>"
     template = ""
