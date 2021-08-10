@@ -69,7 +69,8 @@ class MakeDivTag:
 
     def __call__(self, func):
         def wrap(*args):
-            result = f"<div class={self.style_class}>" + "\n" + func(*args) + "</div>"
+            opening_tag, closing_tag = f"<div class={self.style_class}>", "</div>"
+            result = f"{opening_tag}\n{func(*args)}{closing_tag}"
             return result
 
         return wrap
@@ -79,7 +80,8 @@ class MakeBodyTag:
 
     def __call__(self, func):
         def wrap(*args):
-            result = f"<body>" + "\n" + func(*args) + "\n" + "</body>"
+            opening_tag, closing_tag = "<body>", "</body>"
+            result = f"{opening_tag}\n{func(*args)}\n{closing_tag}"
             return result
 
         return wrap
@@ -91,7 +93,9 @@ class MakeHeadTag:
 
     def __call__(self, func):
         def wrap(*args):
-            result = f"<head>\n<title>{self.title}</title>\n</head>" + "\n" + func(*args)
+            opening_tag, closing_tag = "<head>", "</head>"
+            opening_tag_, closing_tag_ = "<title>", "</title>"
+            result = f"{opening_tag}\n{opening_tag_}{self.title}{closing_tag_}\n{closing_tag}\n{func(*args)}"
             return result
 
         return wrap
@@ -101,7 +105,8 @@ class MakeHtmlTag:
 
     def __call__(self, func):
         def wrap(*args):
-            result = f"<html>" + "\n" + func(*args) + "\n" + "</html>"
+            opening_tag, closing_tag = "<html>", "</html>"
+            result = f"{opening_tag}\n{func(*args)}\n{closing_tag}"
             return result
 
         return wrap
